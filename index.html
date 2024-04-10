@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Images Gallery</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-800 text-white flex items-center justify-center w-full h-[100vh]">
+
+    <div x-data="{
+        fruits: [
+            'https://img.freepik.com/free-psd/red-fresh-apple-isolated-con-transparent-background_125540-5172.jpg?size=626&ext=jpg&ga=GA1.1.1700460183.1712534400&semt=ais',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPZyFueaWV00bhuCpJoowesteKwqetCG6PL7RYyd0GXQ&s',
+            'https://w7.pngwing.com/pngs/9/79/png-transparent-pineapple-fruit-pineapple-pineapple-fruit-pineapple-clipart-thumbnail.png',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOgFQIHkTIqFCXvu-etoWFfmzwNRdDpyjjlzpoK9C6PA&s',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScOjvmFghVih2uQBDsL8hHg9O7ek5-ccBPCPbJx6oWyg&s',
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwT2vLmyfYKa92tKk5udM1TA9NB7S7wk9dh70uzsz6QA&s'
+        ],
+        selectedImage: null,
+        init() {
+            this.selectedImage = this.fruits[0]
+        },
+        previousImage() {
+            const index = this.fruits.indexOf(this.selectedImage)-1;
+            if (index >= 0) {
+                this.selectedImage = this.fruits[index]
+            } else {
+                this.selectedImage = this.fruits[this.fruits.length-1]
+            }
+        },
+        nextImage() {
+            const index = this.fruits.indexOf(this.selectedImage)+1;
+            if (index < this.fruits.length) {
+                this.selectedImage = this.fruits[index];
+            } else {
+                this.selectedImage = this.fruits[0]
+            }
+
+        }
+    }">
+        <div class="relative flex items-center justify-center">
+            <button @click="previousImage()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-10 h-10">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+            <div class="w-1/2 mx-2 rounded-md overflow-hidden">
+                <img :src="selectedImage" alt="fruit" class="border w-[500px] h-[250px]">
+                <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 flex item-center">
+                    <template x-for="i in fruits.length">
+                        <div class="w-2 h-2 mx-2 rounded-full shadow"
+                            :class="i!==fruits.indexOf(selectedImage)+1 ? 'bg-gray-600': 'bg-gray-100'">
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <button @click="nextImage()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-10 h-10">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
